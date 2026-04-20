@@ -8,8 +8,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .card-hover { transition: all 0.2s ease; }
+        .card-hover { transition: all 0.2s ease; cursor: grab; }
         .card-hover:hover { transform: translateY(-4px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1); }
+        .card-hover:active { cursor: grabbing; }
+        .column-drop-zone { min-height: 120px; transition: background-color 0.2s; }
+        .column-drop-zone.drag-over { background-color: rgba(99, 102, 241, 0.08); border-color: rgba(99, 102, 241, 0.4); }
     </style>
 </head>
 <body class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 min-h-screen text-white">
@@ -29,79 +32,85 @@
     </header>
 
     <!-- Kanban Board -->
-    <main class="max-w-6xl mx-auto px-4 pb-20">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <main class="max-w-6xl mx-auto px-4 pb-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="board">
 
             <!-- To Do Column -->
-            <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-5">
+            <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-5 flex flex-col">
                 <div class="flex items-center gap-3 mb-5">
                     <div class="w-3 h-3 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]"></div>
                     <h2 class="text-lg font-bold text-slate-200 uppercase tracking-wider">To Do</h2>
-                    <span class="ml-auto bg-slate-700 text-slate-300 text-xs font-bold px-2.5 py-1 rounded-full">3</span>
+                    <span class="ml-auto bg-slate-700 text-slate-300 text-xs font-bold px-2.5 py-1 rounded-full column-count">3</span>
                 </div>
+                <div class="column-drop-zone flex-1 space-y-4" data-column="todo">
 
-                <!-- Story 1: Bugfix -->
-                <div class="card-hover bg-slate-700/60 rounded-xl p-5 mb-4 border border-slate-600/50 cursor-default">
-                    <div class="flex items-start gap-3 mb-3">
-                        <span class="bg-red-500/20 text-red-400 text-xs font-bold px-2 py-1 rounded border border-red-500/30">BUG</span>
-                        <span class="text-slate-400 text-xs font-mono">Story 1</span>
+                    <!-- Story 1: Bugfix -->
+                    <div class="card-hover bg-slate-700/60 rounded-xl p-5 border border-slate-600/50" draggable="true" data-story="1">
+                        <div class="flex items-start gap-3 mb-3">
+                            <span class="bg-red-500/20 text-red-400 text-xs font-bold px-2 py-1 rounded border border-red-500/30">BUG</span>
+                            <span class="text-slate-400 text-xs font-mono">Story 1</span>
+                        </div>
+                        <h3 class="font-semibold text-slate-100 mb-2">🔧 Button reagiert nicht</h3>
+                        <p class="text-sm text-slate-300 leading-relaxed">
+                            Der "Hinzufügen"-Button reagiert nicht. Finde den Tippfehler in <code class="bg-slate-900 px-1.5 py-0.5 rounded text-indigo-300 font-mono text-xs">app/app.js</code>.
+                            <br><span class="text-yellow-400 mt-2 block">💡 Tipp: Schau dir die Stelle mit dem Bug-Alarm an.</span>
+                        </p>
                     </div>
-                    <h3 class="font-semibold text-slate-100 mb-2">🔧 Button reagiert nicht</h3>
-                    <p class="text-sm text-slate-300 leading-relaxed">
-                        Der "Hinzufügen"-Button reagiert nicht. Finde den Tippfehler in <code class="bg-slate-900 px-1.5 py-0.5 rounded text-indigo-300 font-mono text-xs">app/app.js</code>.
-                        <br><span class="text-yellow-400 mt-2 block">💡 Tipp: Schau dir die Stelle mit dem Bug-Alarm an.</span>
-                    </p>
-                </div>
 
-                <!-- Story 2: Design-Update -->
-                <div class="card-hover bg-slate-700/60 rounded-xl p-5 mb-4 border border-slate-600/50 cursor-default">
-                    <div class="flex items-start gap-3 mb-3">
-                        <span class="bg-blue-500/20 text-blue-400 text-xs font-bold px-2 py-1 rounded border border-blue-500/30">DESIGN</span>
-                        <span class="text-slate-400 text-xs font-mono">Story 2</span>
+                    <!-- Story 2: Design-Update -->
+                    <div class="card-hover bg-slate-700/60 rounded-xl p-5 border border-slate-600/50" draggable="true" data-story="2">
+                        <div class="flex items-start gap-3 mb-3">
+                            <span class="bg-blue-500/20 text-blue-400 text-xs font-bold px-2 py-1 rounded border border-blue-500/30">DESIGN</span>
+                            <span class="text-slate-400 text-xs font-mono">Story 2</span>
+                        </div>
+                        <h3 class="font-semibold text-slate-100 mb-2">🎨 Frischer Look für den Button</h3>
+                        <p class="text-sm text-slate-300 leading-relaxed">
+                            Der Kunde möchte den Button in einem coolen Grün (<code class="bg-slate-900 px-1.5 py-0.5 rounded text-indigo-300 font-mono text-xs">#28a745</code>). 
+                            Passe den Wert in der <code class="bg-slate-900 px-1.5 py-0.5 rounded text-indigo-300 font-mono text-xs">app/style.css</code> an.
+                        </p>
                     </div>
-                    <h3 class="font-semibold text-slate-100 mb-2">🎨 Frischer Look für den Button</h3>
-                    <p class="text-sm text-slate-300 leading-relaxed">
-                        Der Kunde möchte den Button in einem coolen Grün (<code class="bg-slate-900 px-1.5 py-0.5 rounded text-indigo-300 font-mono text-xs">#28a745</code>). 
-                        Passe den Wert in der <code class="bg-slate-900 px-1.5 py-0.5 rounded text-indigo-300 font-mono text-xs">app/style.css</code> an.
-                    </p>
-                </div>
 
-                <!-- Story 3: Neues Feature -->
-                <div class="card-hover bg-slate-700/60 rounded-xl p-5 border border-slate-600/50 cursor-default">
-                    <div class="flex items-start gap-3 mb-3">
-                        <span class="bg-green-500/20 text-green-400 text-xs font-bold px-2 py-1 rounded border border-green-500/30">FEATURE</span>
-                        <span class="text-slate-400 text-xs font-mono">Story 3</span>
+                    <!-- Story 3: Neues Feature -->
+                    <div class="card-hover bg-slate-700/60 rounded-xl p-5 border border-slate-600/50" draggable="true" data-story="3">
+                        <div class="flex items-start gap-3 mb-3">
+                            <span class="bg-green-500/20 text-green-400 text-xs font-bold px-2 py-1 rounded border border-green-500/30">FEATURE</span>
+                            <span class="text-slate-400 text-xs font-mono">Story 3</span>
+                        </div>
+                        <h3 class="font-semibold text-slate-100 mb-2">✨ Liste aufräumen</h3>
+                        <p class="text-sm text-slate-300 leading-relaxed">
+                            Die Liste wird zu lang. Aktiviere den "Alle löschen"-Button. Entferne die Kommentarzeichen im HTML (<code class="bg-slate-900 px-1.5 py-0.5 rounded text-indigo-300 font-mono text-xs">app/index.html</code>) und im JavaScript (<code class="bg-slate-900 px-1.5 py-0.5 rounded text-indigo-300 font-mono text-xs">app/app.js</code>).
+                        </p>
                     </div>
-                    <h3 class="font-semibold text-slate-100 mb-2">✨ Liste aufräumen</h3>
-                    <p class="text-sm text-slate-300 leading-relaxed">
-                        Die Liste wird zu lang. Aktiviere den "Alle löschen"-Button. Entferne die Kommentarzeichen im HTML (<code class="bg-slate-900 px-1.5 py-0.5 rounded text-indigo-300 font-mono text-xs">app/index.html</code>) und im JavaScript (<code class="bg-slate-900 px-1.5 py-0.5 rounded text-indigo-300 font-mono text-xs">app/app.js</code>).
-                    </p>
                 </div>
             </div>
 
             <!-- In Progress Column -->
-            <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-5">
+            <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-5 flex flex-col">
                 <div class="flex items-center gap-3 mb-5">
                     <div class="w-3 h-3 rounded-full bg-yellow-500 shadow-[0_0_8px_rgba(234,179,8,0.5)]"></div>
                     <h2 class="text-lg font-bold text-slate-200 uppercase tracking-wider">In Progress</h2>
-                    <span class="ml-auto bg-slate-700 text-slate-300 text-xs font-bold px-2.5 py-1 rounded-full">0</span>
+                    <span class="ml-auto bg-slate-700 text-slate-300 text-xs font-bold px-2.5 py-1 rounded-full column-count">0</span>
                 </div>
-                <div class="border-2 border-dashed border-slate-600/40 rounded-xl p-8 text-center">
-                    <span class="text-4xl mb-3 block">⏳</span>
-                    <p class="text-slate-500 text-sm">Hier erscheinen Stories, an denen du gerade arbeitest.</p>
+                <div class="column-drop-zone flex-1 space-y-4" data-column="progress">
+                    <div class="border-2 border-dashed border-slate-600/40 rounded-xl p-8 text-center empty-state">
+                        <span class="text-4xl mb-3 block">⏳</span>
+                        <p class="text-slate-500 text-sm">Ziehe eine Story hierher, wenn du daran arbeitest.</p>
+                    </div>
                 </div>
             </div>
 
             <!-- Done Column -->
-            <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-5">
+            <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-5 flex flex-col">
                 <div class="flex items-center gap-3 mb-5">
                     <div class="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]"></div>
                     <h2 class="text-lg font-bold text-slate-200 uppercase tracking-wider">Done</h2>
-                    <span class="ml-auto bg-slate-700 text-slate-300 text-xs font-bold px-2.5 py-1 rounded-full">0</span>
+                    <span class="ml-auto bg-slate-700 text-slate-300 text-xs font-bold px-2.5 py-1 rounded-full column-count">0</span>
                 </div>
-                <div class="border-2 border-dashed border-slate-600/40 rounded-xl p-8 text-center">
-                    <span class="text-4xl mb-3 block">🏆</span>
-                    <p class="text-slate-500 text-sm">Geschafft! Hier landen deine fertigen Stories.</p>
+                <div class="column-drop-zone flex-1 space-y-4" data-column="done">
+                    <div class="border-2 border-dashed border-slate-600/40 rounded-xl p-8 text-center empty-state">
+                        <span class="text-4xl mb-3 block">🏆</span>
+                        <p class="text-slate-500 text-sm">Geschafft! Ziehe fertige Stories hierher.</p>
+                    </div>
                 </div>
             </div>
 
@@ -114,7 +123,147 @@
                 <span>Öffne den Ordner <code class="text-indigo-300 font-mono">app/</code> in VS Code und leg los!</span>
             </div>
         </div>
+
+        <!-- Reset Button (nur für Ausbilder sichtbar, klein und dezent) -->
+        <div class="mt-6 text-center">
+            <button onclick="resetBoard()" class="text-xs text-slate-600 hover:text-slate-400 transition-colors underline cursor-pointer">
+                Board zurücksetzen
+            </button>
+        </div>
     </main>
 
+    <script>
+        // ============================================
+        // 🎯 Interaktives Kanban-Board
+        // ============================================
+        // Die Lernenden können Karten per Drag & Drop
+        // zwischen den Spalten verschieben.
+        // Der Zustand wird im Browser gespeichert.
+        // ============================================
+
+        const STORAGE_KEY = 'scrum-board-state';
+
+        // Alle verschiebbaren Karten und Ablagezonen finden
+        const cards = document.querySelectorAll('[draggable="true"]');
+        const dropZones = document.querySelectorAll('.column-drop-zone');
+
+        // Drag-Start: Die Story-ID merken wir uns
+        cards.forEach(card => {
+            card.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('text/plain', card.dataset.story);
+                card.style.opacity = '0.4';
+            });
+            card.addEventListener('dragend', () => {
+                card.style.opacity = '1';
+            });
+        });
+
+        // Drop-Zonen: Visuelles Feedback beim Darüberziehen
+        dropZones.forEach(zone => {
+            zone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                zone.classList.add('drag-over');
+            });
+            zone.addEventListener('dragleave', () => {
+                zone.classList.remove('drag-over');
+            });
+            zone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                zone.classList.remove('drag-over');
+                const storyId = e.dataTransfer.getData('text/plain');
+                const card = document.querySelector(`[data-story="${storyId}"]`);
+                if (card && zone !== card.parentElement) {
+                    zone.appendChild(card);
+                    updateEmptyStates();
+                    updateCounters();
+                    saveState();
+                }
+            });
+        });
+
+        // Leere-Zustand-Meldungen ein- oder ausblenden
+        function updateEmptyStates() {
+            dropZones.forEach(zone => {
+                const hasCards = zone.querySelectorAll('[draggable="true"]').length > 0;
+                const emptyState = zone.querySelector('.empty-state');
+                if (emptyState) {
+                    emptyState.style.display = hasCards ? 'none' : 'block';
+                }
+            });
+        }
+
+        // Zahlen in den Spalten aktualisieren
+        function updateCounters() {
+            dropZones.forEach(zone => {
+                const count = zone.querySelectorAll('[draggable="true"]').length;
+                const column = zone.closest('.bg-slate-800\/50');
+                const badge = column.querySelector('.column-count');
+                if (badge) badge.textContent = count;
+            });
+        }
+
+        // Zustand im Browser speichern
+        function saveState() {
+            const state = {};
+            dropZones.forEach(zone => {
+                const column = zone.dataset.column;
+                const stories = Array.from(zone.querySelectorAll('[draggable="true"]')).map(c => c.dataset.story);
+                state[column] = stories;
+            });
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        }
+
+        // Zustand aus dem Browser laden
+        function loadState() {
+            try {
+                const state = JSON.parse(localStorage.getItem(STORAGE_KEY));
+                if (!state) return;
+
+                // Alle Karten zurück in die ursprünglichen Zonen sammeln
+                dropZones.forEach(zone => {
+                    const cardsInZone = zone.querySelectorAll('[draggable="true"]');
+                    cardsInZone.forEach(card => {
+                        document.querySelector('[data-column="todo"]').appendChild(card);
+                    });
+                });
+
+                // Karten nach gespeichertem Zustand verteilen
+                Object.entries(state).forEach(([column, stories]) => {
+                    const zone = document.querySelector(`[data-column="${column}"]`);
+                    if (!zone) return;
+                    stories.forEach(storyId => {
+                        const card = document.querySelector(`[data-story="${storyId}"]`);
+                        if (card) zone.appendChild(card);
+                    });
+                });
+
+                updateEmptyStates();
+                updateCounters();
+            } catch (e) {
+                console.log('Konnte Board-Zustand nicht laden:', e);
+            }
+        }
+
+        // Board zurücksetzen (für den Ausbilder)
+        function resetBoard() {
+            if (confirm('Möchtest du das Board wirklich zurücksetzen? Alle Karten landen wieder in „To Do".')) {
+                localStorage.removeItem(STORAGE_KEY);
+                dropZones.forEach(zone => {
+                    if (zone.dataset.column !== 'todo') {
+                        const cardsInZone = zone.querySelectorAll('[draggable="true"]');
+                        cardsInZone.forEach(card => {
+                            document.querySelector('[data-column="todo"]').appendChild(card);
+                        });
+                    }
+                });
+                updateEmptyStates();
+                updateCounters();
+            }
+        }
+
+        // Beim Start laden
+        loadState();
+        updateEmptyStates();
+    </script>
 </body>
 </html>
