@@ -20,11 +20,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // Das Eingabefeld, in das der Nutzer Text tippt
     const todoInput = document.getElementById('todoInput');
 
-    // Der Button, auf den der Nutzer klickt, um einen Eintrag hinzuzufügen
-    const addBtn = document.getElementById('addBtn');
-
     // Die Liste (ul), in die die neuen Einträge kommen
     const todoList = document.getElementById('todoList');
+
+    // Der Button, auf den der Nutzer klickt, um einen Eintrag hinzuzufügen
+    // 🐛 BUG-ALARM (Story 1): Hier stimmt etwas nicht mit dem Namen!
+    // JavaScript unterscheidet zwischen Groß- und Kleinschreibung!
+    // Das Wort 'Id' muss genau so geschrieben werden: getElementById
+    // Ein kleiner Tippfehler reicht aus, damit der Button nicht mehr funktioniert.
+    const addBtn = document.getElementByID('addBtn');
 
     // --- Schritt 2: Funktion definieren ---
     // Diese Funktion fügt einen neuen Eintrag zur Liste hinzu.
@@ -77,14 +81,6 @@ document.addEventListener('DOMContentLoaded', function() {
             addTodo();
         }
     });
-
-    // ============================================
-    // 🐛 BUG-ALARM (Story 1): Hier stimmt etwas nicht mit dem Namen!
-    // Der nächste Befehl sucht nach dem Element mit der ID "todoList".
-    // IDs in JavaScript sind case-sensitive (Groß-/Kleinschreibung zählt!).
-    // ============================================
-    const checkElement = document.getElementByID('todoList');
-    console.log('Element gefunden:', checkElement);
 
 });
 

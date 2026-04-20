@@ -15,8 +15,10 @@ Ein interaktives Repository für Jugendliche (15–18 Jahre), um die Grundlagen 
 
 1. Die Jugendlichen bearbeiten die drei Stories in VS Code.
 2. Du (der Ausbilder) gibst Kimi nach jeder gelösten Story einen Prompt.
-3. Kimi erstellt einen Feature-Branch, committet die Änderungen und merged sie sauber in `main` (mit `--no-ff`).
+3. Kimi erstellt einen Feature-Branch, committet die Änderungen und merged sie sauber in `master` (mit `--no-ff`).
 4. Am Ende entsteht ein schöner Git-Graph, den du mit den Jugendlichen besprechen kannst.
+
+> **Hinweis:** Der Standard-Branch dieses Repos heißt **`master`**. Falls du bei dir `main` nutzt, passe die Prompts unten entsprechend an.
 
 ---
 
@@ -27,30 +29,30 @@ Ein interaktives Repository für Jugendliche (15–18 Jahre), um die Grundlagen 
 ### Story 1 abgeschlossen (Bugfix)
 
 ```
-Kimi, die Lernenden haben Story 1 gelöst. 
-Bitte erstelle den Branch feature/bugfix, 
-commite die Änderungen mit einer passenden Message 
-und mache einen Merge in den main Branch mit --no-ff. 
+Kimi, die Lernenden haben Story 1 gelöst.
+Bitte erstelle den Branch feature/bugfix,
+commite die Änderungen mit einer passenden Message
+und mache einen Merge in den master Branch mit --no-ff.
 Lösche den Branch danach nicht.
 ```
 
 ### Story 2 abgeschlossen (Design-Update)
 
 ```
-Kimi, die Lernenden haben Story 2 gelöst. 
-Bitte erstelle den Branch feature/design-update, 
-commite die Änderungen mit einer passenden Message 
-und mache einen Merge in den main Branch mit --no-ff. 
+Kimi, die Lernenden haben Story 2 gelöst.
+Bitte erstelle den Branch feature/design-update,
+commite die Änderungen mit einer passenden Message
+und mache einen Merge in den master Branch mit --no-ff.
 Lösche den Branch danach nicht.
 ```
 
 ### Story 3 abgeschlossen (Neues Feature)
 
 ```
-Kimi, die Lernenden haben Story 3 gelöst. 
-Bitte erstelle den Branch feature/clear-all, 
-commite die Änderungen mit einer passenden Message 
-und mache einen Merge in den main Branch mit --no-ff. 
+Kimi, die Lernenden haben Story 3 gelöst.
+Bitte erstelle den Branch feature/clear-all,
+commite die Änderungen mit einer passenden Message
+und mache einen Merge in den master Branch mit --no-ff.
 Lösche den Branch danach nicht.
 ```
 
